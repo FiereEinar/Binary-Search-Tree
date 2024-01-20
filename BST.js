@@ -1,3 +1,5 @@
+import mergeSort from './mergeSort.js';
+
 class Node {
     constructor(data) {
         this.data = data;
@@ -47,8 +49,21 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
+const removeDuplicate = (array) => {
+	const filteredArray = [];
+	
+	for (let i = 0; i <= array.length - 1; i++) {
+		if (array[i] != array[i - 1]) {
+			filteredArray.push(array[i]);
+		}
+	}
+	return filteredArray;
+};
+
 const myArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
-const myTree = new Tree(myArray);
+const processedArray = removeDuplicate(mergeSort(myArray));
+
+const myTree = new Tree(processedArray);
 
 prettyPrint(myTree.root);
