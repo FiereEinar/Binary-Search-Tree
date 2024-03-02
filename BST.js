@@ -98,19 +98,15 @@ class Tree {
     }
 
     findFast(value) {
-        return myHashMap.get(value.toString()); // O(1) baby
+        return myHashMap.get(value.toString()); 
     }
 
-    find(value) {
-        return findRec(value, this.root);
+    find(value, root = this.root) {
+        if (root === null) return null;
+        if (value === root.data) return root;
 
-        function findRec(value, root) {
-            if (root === null) return null;
-            if (value === root.data) return root;
-
-            if (value < root.data) return findRec(value, root.left);
-            if (value > root.data) return findRec(value, root.right);
-        }
+        if (value < root.data) return this.find(value, root.left);
+        if (value > root.data) return this.find(value, root.right);
     }
 
     levelOrder(callbackFn) {
@@ -206,15 +202,11 @@ class Tree {
         }
     }
 
-    depth(node) {
-        return traverse(this.root, 0);
+    depth(node, root = this.root, count = 0) {
+        if (root.data === node.data) return count;
 
-        function traverse(root, count) {
-            if (root.data === node.data) return count;
-
-            if (node.data < root.data) return traverse(root.left, count + 1);
-            if (node.data > root.data) return traverse(root.right, count + 1);
-        }
+        if (node.data < root.data) return this.depth(node, root.left, count + 1);
+        if (node.data > root.data) return this.depth(node, root.right, count + 1);
     }
 
     isBalanced() {
@@ -265,7 +257,12 @@ function generateRandomArray(length) {
     return array;
 }
 
-const myArray = generateRandomArray(12)
+//const myArray = generateRandomArray(12)
+const myArray = [
+   37,  14, 84,  4, 20, 54,
+  101,   7, 15, 22, 46, 64,
+   86, 103
+]
 const myTree = new Tree(myArray);
 
 prettyPrint(myTree.root)
@@ -293,36 +290,6 @@ console.log(myTree.postOrder())
 console.log(myTree.inOrder())
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const myArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 81, 70, 234, 2131, 1344, 2161];
-
-// const myTree = new Tree(myArray);
-
-
-// myTree.insert(3451)
-// console.log(myHashMap.entries());
-// console.log(myHashMap.table)
-// prettyPrint(myTree.root);
-// console.log('Height of 5 in the tree: ' + myTree.height(myTree.find(5)))
-// console.log(myTree.depth(myTree.find(23)))
-// console.log(myTree.isBalanced());
-
-// myTree.reBalance()
-// prettyPrint(myTree.root);
+//prettyPrint(myTree.find(20))
+console.log('depth: ' + myTree.depth(myTree.find(20)))
+console.log('height: ' + myTree.height(myTree.find(20)))
