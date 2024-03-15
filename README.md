@@ -25,7 +25,3 @@ first we are sorting the given array and putting it in the new Set constructor t
 ```javascript
 [...new Set(array.sort((a, b) => a - b))];
 ```
-
-## Extras
-
-I have an extra function called findFast() where it uses a hashmap to get the value. I don't know why i did it.

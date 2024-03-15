@@ -1,6 +1,3 @@
-const HashMap = require('./hashMap.js');
-
-const myHashMap = new HashMap();
 
 class Node {
     constructor(data) {
@@ -22,22 +19,14 @@ class Tree {
         const mid = parseInt((start + end) / 2);
         const node = new Node(array[mid]);
 
-        this.addToHash(array[mid], node);
-
         node.left = this.buildTree(array, start, mid - 1);
         node.right = this.buildTree(array, mid + 1, end);
 
         return node;
     }
 
-    addToHash(key, value) {
-        const myKey = key.toString(); // the key is just a string version of the data
-        myHashMap.set(myKey, value);
-    }
-
-    insert(value) {
+    insert(value, root = this.root) {
         this.root = insertRec(value, this.root);
-        this.addToHash(value, new Node(value));
 
         function insertRec(value, root) {
             if (root === null) return new Node(value);
@@ -51,7 +40,6 @@ class Tree {
 
     delete(value) {
         this.root = deleteRec(value, this.root);
-        myHashMap.remove(value.toString());
 
         function deleteRec(item, node) {
             if (node === null) return node;
@@ -95,10 +83,6 @@ class Tree {
                 return newTree;
             }
         }
-    }
-
-    findFast(value) {
-        return myHashMap.get(value.toString()); 
     }
 
     find(value, root = this.root) {
@@ -273,8 +257,8 @@ console.log(myTree.preOrder())
 console.log(myTree.postOrder())
 console.log(myTree.inOrder())
 
-myTree.insert(101)
-myTree.insert(103)
+myTree.insert(150)
+myTree.insert(153)
 
 prettyPrint(myTree.root)
 console.log(myTree.isBalanced())
@@ -288,8 +272,6 @@ console.log(myTree.levelOrder())
 console.log(myTree.preOrder())
 console.log(myTree.postOrder())
 console.log(myTree.inOrder())
-
-
-//prettyPrint(myTree.find(20))
+ 
 console.log('depth: ' + myTree.depth(myTree.find(20)))
 console.log('height: ' + myTree.height(myTree.find(20)))
